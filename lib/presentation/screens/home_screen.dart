@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ostad_14_project_lottery_app/core/app_colors.dart';
 import 'package:ostad_14_project_lottery_app/core/app_string.dart';
+import 'package:ostad_14_project_lottery_app/presentation/screens/result_screen.dart';
 import 'package:ostad_14_project_lottery_app/presentation/widget/number_tile.dart';
 import 'package:provider/provider.dart';
 
@@ -17,12 +18,11 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int? _selectedNumber;
 
-
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<LotteryProvider>(context);
     return GradientScaffold(
-      showBackButton: true,
+      // showBackButton: true,
       title: AppStrings.appTitle,
       body: SafeArea(
         child: Center(
@@ -101,7 +101,13 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    provider.playLottery();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ResultScreen()),
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.transparent,
                   ),
@@ -111,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              Text(AppStrings.goodLuck, style: TextStyle(fontSize: 22),),
+              Text(AppStrings.goodLuck, style: TextStyle(fontSize: 22)),
             ],
           ),
         ),
