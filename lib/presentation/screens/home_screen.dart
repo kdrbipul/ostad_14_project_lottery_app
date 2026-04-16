@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:ostad_14_project_lottery_app/core/app_colors.dart';
 import 'package:ostad_14_project_lottery_app/core/app_string.dart';
-import 'package:ostad_14_project_lottery_app/presentation/screens/result_screen.dart';
-import 'package:ostad_14_project_lottery_app/presentation/widget/number_tile.dart';
 import 'package:provider/provider.dart';
 
 import '../provider/lottery_provider.dart';
 import '../widget/gradient_scaffold.dart';
+import 'lottery_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -31,25 +30,14 @@ class _HomeScreenState extends State<HomeScreen> {
             spacing: 15,
             children: [
               SizedBox(height: 100),
-              Icon(Icons.casino, size: 100, color: Colors.cyanAccent),
-              Text(
-                AppStrings.entryHeading,
-                style: TextStyle(
-                  fontSize: 38,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.white,
+              Container(
+                height: 150,
+                width: 150,
+                decoration: BoxDecoration(
+                  color: Colors.cyanAccent,
+                  shape: BoxShape.circle
                 ),
-                textAlign: TextAlign.center,
-              ),
-              Text(
-                AppStrings.entrySubheading,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.whiteOpacity70,
-                ),
-                textAlign: TextAlign.center,
-              ),
+                  child: Icon(Icons.casino, size: 100, color: Colors.white)),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Container(
@@ -75,49 +63,54 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
-                  child: GridView.builder(
-                    shrinkWrap: true,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 5,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10,
-                      childAspectRatio: 1,
-                    ),
-                    itemCount: 10,
-                    itemBuilder: (context, index) {
-                      final number = index + 1;
-                      return NumberTile(
-                        number: number,
-                        isSelected: _selectedNumber == number,
-                        onTap: () {
-                          setState(() => _selectedNumber = number);
-                          provider.setSelectedNumber(number);
-                        },
-                      );
-                    },
+                  child: Column(
+                    children: [
+                      Text(
+                        AppStrings.homeTitle,
+                        style: TextStyle(
+                          fontSize: 65,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Text(
+                        AppStrings.homeTagline,
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Text(
+                        AppStrings.homeEmoji,
+                        style: TextStyle(
+                          fontSize: 26,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
               SizedBox(
                 width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    provider.playLottery();
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => ResultScreen()),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.transparent,
-                  ),
-                  child: Text(
-                    AppStrings.playLotteryAction,
-                    style: TextStyle(fontSize: 22, color: Colors.white),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LotteryScreen()),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.cyanAccent,
+                    ),
+                    child: Text(
+                      AppStrings.playLotteryAction,
+                      style: TextStyle(fontSize: 22, color: Colors.white),
+                    ),
                   ),
                 ),
               ),
-              Text(AppStrings.goodLuck, style: TextStyle(fontSize: 22)),
             ],
           ),
         ),
